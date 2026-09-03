@@ -1,9 +1,9 @@
-import { StrictMode, useState } from 'react';
+import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ColorPicker } from 'color-selector';
 
 function App() {
-  const [value, setValue] = useState('oklch(70% 0.15 250)');
+  const [value, setValue] = React.useState('oklch(70% 0.15 250)');
 
   return (
     <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
@@ -23,7 +23,7 @@ function App() {
 }
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>,
 );

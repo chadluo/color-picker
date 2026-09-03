@@ -1,4 +1,4 @@
-import { useId, useRef, type CSSProperties, type ToggleEvent } from 'react';
+import * as React from 'react';
 import { ColorPickerPanel, type ColorPickerPanelProps } from './ColorPickerPanel';
 import './ColorPicker.css';
 
@@ -14,11 +14,11 @@ export type ColorPickerProps = ColorPickerPanelProps;
  * (outside click, Escape) — no positioning library, no open-state management of our own.
  */
 export function ColorPicker({ value, onChange, className }: ColorPickerProps) {
-  const popoverId = useId();
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
+  const popoverId = React.useId();
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const popoverRef = React.useRef<HTMLDivElement>(null);
 
-  const handleToggle = (e: ToggleEvent<HTMLDivElement>) => {
+  const handleToggle = (e: React.ToggleEvent<HTMLDivElement>) => {
     if (e.newState !== 'open') return;
     const button = buttonRef.current;
     const popover = popoverRef.current;
@@ -37,7 +37,7 @@ export function ColorPicker({ value, onChange, className }: ColorPickerProps) {
         popoverTarget={popoverId}
         aria-label="Choose a color"
       >
-        <span className="cp-trigger-swatch" style={{ '--cp-current-color': value } as CSSProperties} />
+        <span className="cp-trigger-swatch" style={{ '--cp-current-color': value } as React.CSSProperties} />
       </button>
       <div ref={popoverRef} id={popoverId} popover="auto" className="cp-popover" onToggle={handleToggle}>
         <ColorPickerPanel value={value} onChange={onChange} />

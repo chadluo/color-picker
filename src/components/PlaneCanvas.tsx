@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import * as React from 'react';
 import type { PlaneFamily } from '../color/state';
 import { nativeToPlane, planeToNative } from '../webgl/planeAxes';
 import { createPlaneRenderer, type PlaneRenderer } from '../webgl/createPlaneRenderer';
@@ -21,11 +21,11 @@ export interface PlaneCanvasProps {
 }
 
 export function PlaneCanvas({ family, hue, axis1, lightness, onPick, onWheelHue, size = 240 }: PlaneCanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const rendererRef = useRef<PlaneRenderer | null>(null);
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const wrapperRef = React.useRef<HTMLDivElement>(null);
+  const rendererRef = React.useRef<PlaneRenderer | null>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const dpr = window.devicePixelRatio || 1;
@@ -42,13 +42,13 @@ export function PlaneCanvas({ family, hue, axis1, lightness, onPick, onWheelHue,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [family, size]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     rendererRef.current?.setHue(hue);
   }, [hue]);
 
   // Native (non-passive) listener: React's synthetic onWheel is passive, so preventDefault
   // there would silently no-op and the page would scroll while you're trying to spin the hue.
-  useEffect(() => {
+  React.useEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
     const handler = (e: WheelEvent) => {

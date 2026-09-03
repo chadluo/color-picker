@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
+import * as React from 'react';
 import {
   type Format,
   type PickerColor,
@@ -45,17 +45,17 @@ function withAlpha(color: PickerColor, alpha: number): PickerColor {
  * embedding directly (e.g. a custom trigger UI); most consumers want `ColorPicker`, which wraps
  * this in a button + popover. */
 export function ColorPickerPanel({ value, onChange, className }: ColorPickerPanelProps) {
-  const initial = useRef<{ format: Format; color: PickerColor } | null>(null);
+  const initial = React.useRef<{ format: Format; color: PickerColor } | null>(null);
   if (!initial.current) initial.current = parseColor(value);
 
-  const [format, setFormat] = useState<Format>(initial.current.format);
-  const [color, setColor] = useState<PickerColor>(initial.current.color);
-  const [clampNotice, setClampNotice] = useState(false);
-  const lastEmitted = useRef(value);
+  const [format, setFormat] = React.useState<Format>(initial.current.format);
+  const [color, setColor] = React.useState<PickerColor>(initial.current.color);
+  const [clampNotice, setClampNotice] = React.useState(false);
+  const lastEmitted = React.useRef(value);
 
   // Re-sync from `value` prop changes that didn't originate here. Format is intentionally left
   // out of this effect's reasoning — external updates never change the active format (ADR-0003).
-  useEffect(() => {
+  React.useEffect(() => {
     if (value === lastEmitted.current) return;
     const { color: clamped, wasClamped } = clampToGamut(parseColor(value, format).color);
     setColor(clamped);
@@ -66,7 +66,7 @@ export function ColorPickerPanel({ value, onChange, className }: ColorPickerPane
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  const commit = useCallback(
+  const commit = React.useCallback(
     (nextColor: PickerColor, nextFormat: Format = format) => {
       const { color: clamped, wasClamped } = clampToGamut(nextColor);
       setColor(clamped);
@@ -91,7 +91,7 @@ export function ColorPickerPanel({ value, onChange, className }: ColorPickerPane
     commit(withHue(color, hue));
   };
 
-  const handleWheelHue = useCallback(
+  const handleWheelHue = React.useCallback(
     (deltaY: number) => {
       commit(withHue(color, axesOf(color).hue + deltaY * 0.5));
     },
@@ -121,7 +121,7 @@ export function ColorPickerPanel({ value, onChange, className }: ColorPickerPane
         <HueSlider hue={hue} onChange={handleHueChange} />
         <AlphaSlider alpha={color.alpha} opaqueColorCss={opaqueCss} onChange={handleAlphaChange} />
         <div className="cp-footer">
-          <span className="cp-swatch" style={{ '--cp-current-color': outputCss } as CSSProperties} />
+          <span className="cp-swatch" style={{ '--cp-current-color': outputCss } as React.CSSProperties} />
           <FormatSelect format={format} onChange={handleFormatChange} />
           <code className="cp-output">{outputCss}</code>
         </div>

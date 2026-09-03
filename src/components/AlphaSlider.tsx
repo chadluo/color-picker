@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import * as React from 'react';
 
 export interface AlphaSliderProps {
   alpha: number;
@@ -8,7 +8,7 @@ export interface AlphaSliderProps {
 }
 
 export function AlphaSlider({ alpha, opaqueColorCss, onChange }: AlphaSliderProps) {
-  const style = { '--cp-alpha-color': opaqueColorCss } as CSSProperties;
+  const style = { '--cp-alpha-color': opaqueColorCss } as React.CSSProperties;
   return (
     <input
       type="range"
