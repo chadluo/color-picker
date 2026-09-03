@@ -1,5 +1,6 @@
 .cp-root {
   display: inline-flex;
+  flex-direction: column;
   gap: 12px;
   font: 13px system-ui, sans-serif;
   color: #1a1a1a;
@@ -36,7 +37,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 220px;
+  width: 240px;
 }
 
 .cp-hue-slider,
