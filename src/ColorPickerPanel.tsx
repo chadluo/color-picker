@@ -123,8 +123,8 @@ export function ColorPickerPanel({ value, onChange, className }: ColorPickerPane
         <div className="cp-footer">
           <span className="cp-swatch" style={{ '--cp-current-color': outputCss } as React.CSSProperties} />
           <FormatSelect format={format} onChange={handleFormatChange} />
-          <code className="cp-output">{outputCss}</code>
         </div>
+        <code className="cp-output">{outputCss}</code>
         {clampNotice && <p className="cp-clamp-notice">Adjusted to fit your screen's colors.</p>}
       </div>
     </div>

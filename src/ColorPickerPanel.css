@@ -114,11 +114,8 @@
 }
 
 .cp-output {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: block;
+  word-break: break-all;
   font-size: 11px;
   color: #555;
 }
