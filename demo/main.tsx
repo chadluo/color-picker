@@ -8,12 +8,12 @@ function App() {
   return (
     <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
       <h1 style={{ font: '600 18px system-ui' }}>Color Picker Demo</h1>
-      <ColorPicker value={value} onChange={setValue} />
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span>External value:</span>
+        <ColorPicker value={value} onChange={setValue} />
         <input
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          aria-label="Color value"
           style={{ font: 'inherit', width: 320, padding: 4 }}
         />
       </div>
