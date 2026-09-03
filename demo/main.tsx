@@ -1,0 +1,29 @@
+import { StrictMode, useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ColorPicker } from 'color-selector';
+
+function App() {
+  const [value, setValue] = useState('oklch(70% 0.15 250)');
+
+  return (
+    <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
+      <h1 style={{ font: '600 18px system-ui' }}>Color Picker Demo</h1>
+      <ColorPicker value={value} onChange={setValue} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span>External value:</span>
+        <input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          style={{ font: 'inherit', width: 320, padding: 4 }}
+        />
+      </div>
+      <div style={{ width: 120, height: 60, borderRadius: 8, background: value, border: '1px solid #ccc' }} />
+    </div>
+  );
+}
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
