@@ -19,7 +19,12 @@ export interface ColorPickerPanelProps {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+  /** Degrees of hue change per unit of wheel `deltaY` when scrolling over the plane. Lower is
+   * slower/more precise. Default 0.1. */
+  wheelSensitivity?: number;
 }
+
+const DEFAULT_WHEEL_SENSITIVITY = 0.1;
 
 function axesOf(color: PickerColor): { hue: number; axis1: number; lightness: number } {
   return {
@@ -44,7 +49,12 @@ function withAlpha(color: PickerColor, alpha: number): PickerColor {
 /** The full inline picker: WebGL plane, hue/alpha sliders, format dropdown. Exported for
  * embedding directly (e.g. a custom trigger UI); most consumers want `ColorPicker`, which wraps
  * this in a button + popover. */
-export function ColorPickerPanel({ value, onChange, className }: ColorPickerPanelProps) {
+export function ColorPickerPanel({
+  value,
+  onChange,
+  className,
+  wheelSensitivity = DEFAULT_WHEEL_SENSITIVITY,
+}: ColorPickerPanelProps) {
   const initial = React.useRef<{ format: Format; color: PickerColor } | null>(null);
   if (!initial.current) initial.current = parseColor(value);
 
@@ -93,9 +103,9 @@ export function ColorPickerPanel({ value, onChange, className }: ColorPickerPane
 
   const handleWheelHue = React.useCallback(
     (deltaY: number) => {
-      commit(withHue(color, axesOf(color).hue + deltaY * 0.5));
+      commit(withHue(color, axesOf(color).hue + deltaY * wheelSensitivity));
     },
-    [color, commit],
+    [color, commit, wheelSensitivity],
   );
 
   const handleAlphaChange = (alpha: number) => {

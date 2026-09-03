@@ -13,7 +13,7 @@ export type ColorPickerProps = ColorPickerPanelProps;
  * Uses the native Popover API (`popover`/`popoverTarget`) for open/close state and light-dismiss
  * (outside click, Escape) — no positioning library, no open-state management of our own.
  */
-export function ColorPicker({ value, onChange, className }: ColorPickerProps) {
+export function ColorPicker({ value, onChange, className, wheelSensitivity }: ColorPickerProps) {
   const popoverId = React.useId();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const popoverRef = React.useRef<HTMLDivElement>(null);
@@ -40,7 +40,7 @@ export function ColorPicker({ value, onChange, className }: ColorPickerProps) {
         <span className="cp-trigger-swatch" style={{ '--cp-current-color': value } as React.CSSProperties} />
       </button>
       <div ref={popoverRef} id={popoverId} popover="auto" className="cp-popover" onToggle={handleToggle}>
-        <ColorPickerPanel value={value} onChange={onChange} />
+        <ColorPickerPanel value={value} onChange={onChange} wheelSensitivity={wheelSensitivity} />
       </div>
     </>
   );
